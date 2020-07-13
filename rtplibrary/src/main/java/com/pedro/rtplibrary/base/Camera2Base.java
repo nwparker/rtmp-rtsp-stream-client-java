@@ -318,7 +318,7 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
    * Replace glInterface used on fly. Ignored if you use SurfaceView, TextureView or context without
    * OpenGl.
    */
-  private void replaceGlInterface(GlInterface glInterface) {
+  public void replaceGlInterface(GlInterface glInterface) {
     if (this.glInterface != null && Build.VERSION.SDK_INT >= 18) {
       if (isStreaming() || isRecording() || isOnPreview()) {
         cameraManager.closeCamera();
@@ -453,7 +453,7 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
     onPreview = true;
   }
 
-  private void resetVideoEncoder() {
+  public void resetVideoEncoder() {
     if (glInterface != null) {
       glInterface.removeMediaCodecSurface();
     }
@@ -467,7 +467,7 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
     }
   }
 
-  private void prepareGlView() {
+  public void prepareGlView() {
     if (glInterface != null && videoEnabled) {
       if (glInterface instanceof OffScreenGlThread) {
         glInterface = new OffScreenGlThread(context);
