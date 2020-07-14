@@ -130,7 +130,10 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
       if (formatVideoEncoder == FormatVideoEncoder.SURFACE
           && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
         isBufferMode = false;
-        inputSurface = codec.createInputSurface();
+        if (inputSurface == null) {
+          inputSurface = MediaCodec.createPersistentInputSurface();
+        }
+        codec.setInputSurface(inputSurface);
       }
       Log.i(TAG, "prepared");
       return true;
