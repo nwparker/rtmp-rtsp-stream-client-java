@@ -65,13 +65,22 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
     return prepareVideoEncoder(width, height, fps, bitRate, rotation, hardwareRotation,
       iFrameInterval, formatVideoEncoder, -1, -1);
   }
-
+  
   /**
    * Prepare encoder with custom parameters
    */
   public boolean prepareVideoEncoder(int width, int height, int fps, int bitRate, int rotation,
       boolean hardwareRotation, int iFrameInterval, FormatVideoEncoder formatVideoEncoder,
       int avcProfile, int avcProfileLevel) {
+    prepareVideoEncoder(width, height, fps, bitRate, rotation, hardwareRotation, iFrameInterval, formatVideoEncoder, avcProfile, avcProfileLevel, false);
+  }
+
+  /**
+   * Prepare encoder with custom parameters
+   */
+  public boolean prepareVideoEncoder(int width, int height, int fps, int bitRate, int rotation,
+      boolean hardwareRotation, int iFrameInterval, FormatVideoEncoder formatVideoEncoder,
+      int avcProfile, int avcProfileLevel, boolean isRunning) {
     this.width = width;
     this.height = height;
     this.fps = fps;
@@ -126,7 +135,7 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
         videoFormat.setInteger("level", this.avcProfileLevel);
       }
       codec.configure(videoFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
-      running = false;
+      running = isRunning;
       if (formatVideoEncoder == FormatVideoEncoder.SURFACE
           && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
         isBufferMode = false;
