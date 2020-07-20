@@ -25,7 +25,7 @@ import java.nio.ByteBuffer;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class RtmpCamera2 extends Camera2Base {
 
-  private SrsFlvMuxer srsFlvMuxer;
+  public SrsFlvMuxer srsFlvMuxer;
 
   /**
    * @deprecated This view produce rotations problems and could be unsupported in future versions.

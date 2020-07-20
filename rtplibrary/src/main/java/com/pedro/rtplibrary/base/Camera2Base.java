@@ -59,7 +59,7 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
 
   protected Context context;
   private Camera2ApiManager cameraManager;
-  protected VideoEncoder videoEncoder;
+  public VideoEncoder videoEncoder;
   private MicrophoneManager microphoneManager;
   private AudioEncoder audioEncoder;
   private boolean streaming = false;
