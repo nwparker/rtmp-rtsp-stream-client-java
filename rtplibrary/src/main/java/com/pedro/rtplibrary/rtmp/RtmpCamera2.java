@@ -25,7 +25,7 @@ import java.nio.ByteBuffer;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class RtmpCamera2 extends Camera2Base {
 
-  private SrsFlvMuxer srsFlvMuxer;
+  public SrsFlvMuxer srsFlvMuxer;
 
   public RtmpCamera2(SurfaceView surfaceView, ConnectCheckerRtmp connectChecker) {
     super(surfaceView);
