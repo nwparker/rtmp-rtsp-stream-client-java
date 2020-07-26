@@ -137,21 +137,6 @@ public class OpenGlView extends OpenGlViewBase {
           }
           surfaceManager.swapBuffer();
 
-
-          synchronized (sync2) {
-            if (surfaceManagerEncoder2 != null && !fpsLimiter.limitFPS()) {
-              surfaceManagerEncoder2.makeCurrent();
-              if (muteVideo) {
-                managerRender.drawScreen(0, 0, false, aspectRatioMode, streamRotation, false,
-                        isStreamVerticalFlip, isStreamHorizontalFlip);
-              } else {
-                managerRender.drawScreen(1920, 1080, false, aspectRatioMode,
-                        streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
-              }
-              surfaceManagerEncoder2.swapBuffer();
-            }
-          }
-
           synchronized (sync) {
             if (surfaceManagerEncoder != null && !fpsLimiter.limitFPS()) {
               surfaceManagerEncoder.makeCurrent();
@@ -163,6 +148,20 @@ public class OpenGlView extends OpenGlViewBase {
                     streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
               }
               surfaceManagerEncoder.swapBuffer();
+            }
+          }
+
+          synchronized (sync2) {
+            if (surfaceManagerEncoder2 != null) {
+              surfaceManagerEncoder2.makeCurrent();
+              if (muteVideo) {
+                managerRender.drawScreen(0, 0, false, aspectRatioMode, streamRotation, false,
+                        isStreamVerticalFlip, isStreamHorizontalFlip);
+              } else {
+                managerRender.drawScreen(1920, 1080, false, aspectRatioMode,
+                        streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
+              }
+              surfaceManagerEncoder2.swapBuffer();
             }
           }
 
