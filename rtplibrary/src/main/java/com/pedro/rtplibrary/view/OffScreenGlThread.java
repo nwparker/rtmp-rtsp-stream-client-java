@@ -31,6 +31,7 @@ public class OffScreenGlThread
   private SurfaceManager surfaceManagerPhoto = null;
   private SurfaceManager surfaceManager = null;
   private SurfaceManager surfaceManagerEncoder = null;
+  protected SurfaceManager surfaceManagerEncoder2 = null;
 
   private ManagerRender textureManager = null;
 
@@ -122,6 +123,23 @@ public class OffScreenGlThread
       }
       if (surfaceManagerPhoto == null && surfaceManager != null) {
         surfaceManagerPhoto = new SurfaceManager(encoderWidth, encoderHeight, surfaceManager);
+      }
+    }
+  }
+
+  @Override
+  public void addMediaCodecSurface2(Surface surface) {
+    synchronized (sync) {
+      surfaceManagerEncoder2 = new SurfaceManager(surface, surfaceManager);
+    }
+  }
+
+  @Override
+  public void removeMediaCodecSurface2() {
+    synchronized (sync) {
+      if (surfaceManagerEncoder2 != null) {
+        surfaceManagerEncoder2.release();
+        surfaceManagerEncoder2 = null;
       }
     }
   }
