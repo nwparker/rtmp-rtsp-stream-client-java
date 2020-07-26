@@ -43,6 +43,18 @@ public interface GlInterface {
   void removeMediaCodecSurface();
 
   /**
+   * Set surface from MediaCodec class to Opengl.
+   * This surface is used to copy pixels from Opengl surface to this surface and encode this pixels.
+   * @param surface surface created from MediaCodec.
+   */
+  void addMediaCodecSurface2(Surface surface);
+
+  /**
+   * Remove surface generated from MediaCodec.
+   */
+  void removeMediaCodecSurface2();
+
+  /**
    * Capture an Image from Opengl.
    *
    * @param takePhotoCallback callback where you will get your image like a bitmap.
