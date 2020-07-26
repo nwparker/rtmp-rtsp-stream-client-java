@@ -33,11 +33,13 @@ public abstract class OpenGlViewBase extends SurfaceView
 
   protected SurfaceManager surfaceManager = null;
   protected SurfaceManager surfaceManagerEncoder = null;
+  protected SurfaceManager surfaceManagerEncoder2 = null;
 
   protected FpsLimiter fpsLimiter = new FpsLimiter();
   protected final Semaphore semaphore = new Semaphore(0);
   protected final BlockingQueue<Filter> filterQueue = new LinkedBlockingQueue<>();
   protected final Object sync = new Object();
+  protected final Object sync2 = new Object();
   protected int previewWidth, previewHeight;
   protected int encoderWidth, encoderHeight;
   protected TakePhotoCallback takePhotoCallback;
@@ -124,6 +126,23 @@ public abstract class OpenGlViewBase extends SurfaceView
       if (surfaceManagerEncoder != null) {
         surfaceManagerEncoder.release(false);
         surfaceManagerEncoder = null;
+      }
+    }
+  }
+
+  @Override
+  public void addMediaCodecSurface2(Surface surface) {
+    synchronized (sync2) {
+      surfaceManagerEncoder2 = new SurfaceManager(surface, surfaceManager);
+    }
+  }
+
+  @Override
+  public void removeMediaCodecSurface2() {
+    synchronized (sync2) {
+      if (surfaceManagerEncoder2 != null) {
+        surfaceManagerEncoder2.release();
+        surfaceManagerEncoder2 = null;
       }
     }
   }
