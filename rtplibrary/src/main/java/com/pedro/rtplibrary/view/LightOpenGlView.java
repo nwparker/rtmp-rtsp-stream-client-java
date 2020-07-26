@@ -77,6 +77,7 @@ public class LightOpenGlView extends OpenGlViewBase {
     releaseSurfaceManager();
     surfaceManager = new SurfaceManager(getHolder().getSurface());
     surfaceManager.makeCurrent();
+    // I am unsure about the following line
     simpleCameraRender.initGl(getContext(), encoderWidth, encoderHeight);
     simpleCameraRender.getSurfaceTexture().setOnFrameAvailableListener(this);
     if (surfaceManagerEncoder == null && surfaceManagerPhoto == null) {
@@ -111,8 +112,8 @@ public class LightOpenGlView extends OpenGlViewBase {
           }
         }
 
-        synchronized (sync) {
-          if (surfaceManagerEncoder2 != null && !fpsLimiter.limitFPS()) {
+        synchronized (sync2) {
+          if (surfaceManagerEncoder2 != null) {
             surfaceManagerEncoder2.makeCurrent();
             if (muteVideo) {
               simpleCameraRender.drawFrame(0, 0, false, aspectRatioMode, streamRotation, false,
