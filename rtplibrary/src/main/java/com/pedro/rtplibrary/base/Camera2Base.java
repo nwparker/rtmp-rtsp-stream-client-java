@@ -173,6 +173,11 @@ public abstract class Camera2Base {
     microphoneManager.setCustomAudioEffect(customAudioEffect);
   }
 
+  public void dispose() {
+    recorderVideoEncoder.dispose();
+    streamVideoEncoder.dispose();
+  }
+
   /**
    * @param callback get fps while record or stream
    */

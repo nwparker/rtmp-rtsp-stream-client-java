@@ -1,5 +1,6 @@
 package com.pedro.encoder.video;
 
+import android.annotation.SuppressLint;
 import android.graphics.ImageFormat;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -31,6 +32,7 @@ import java.util.concurrent.BlockingQueue;
  * This class need use same resolution, fps and imageFormat that Camera1ApiManagerGl
  */
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class VideoEncoder extends BaseEncoder implements GetCameraData {
 
   private static final String TAG = "VideoEncoder";
@@ -39,7 +41,7 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
   private boolean hardwareRotation = false;
 
   //surface to buffer encoder
-  private Surface inputSurface;
+  private final Surface inputSurface = MediaCodec.createPersistentInputSurface();
 
   private int width = 640;
   private int height = 480;
@@ -67,9 +69,10 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
   /**
    * Prepare encoder with custom parameters
    */
+  @RequiresApi(api = Build.VERSION_CODES.M)
   public boolean prepareVideoEncoder(int width, int height, int fps, int bitRate, int rotation,
-      boolean hardwareRotation, int iFrameInterval, FormatVideoEncoder formatVideoEncoder,
-      int avcProfile, int avcProfileLevel) {
+                                     boolean hardwareRotation, int iFrameInterval, FormatVideoEncoder formatVideoEncoder,
+                                     int avcProfile, int avcProfileLevel) {
     this.width = width;
     this.height = height;
     this.fps = fps;
@@ -128,7 +131,7 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
       if (formatVideoEncoder == FormatVideoEncoder.SURFACE
           && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
         isBufferMode = false;
-        inputSurface = codec.createInputSurface();
+        codec.setInputSurface(inputSurface);
       }
       Log.i(TAG, "prepared");
       return true;
@@ -154,9 +157,11 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
   @Override
   protected void stopImp() {
     spsPpsSetted = false;
-    if (inputSurface != null) inputSurface.release();
-    inputSurface = null;
     Log.i(TAG, "stopped");
+  }
+
+  public void dispose() {
+    inputSurface.release();
   }
 
   public void reset() {
@@ -214,10 +219,6 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
 
   public Surface getInputSurface() {
     return inputSurface;
-  }
-
-  public void setInputSurface(Surface inputSurface) {
-    this.inputSurface = inputSurface;
   }
 
   public int getWidth() {
