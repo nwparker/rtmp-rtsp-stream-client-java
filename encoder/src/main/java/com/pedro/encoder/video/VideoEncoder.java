@@ -41,7 +41,7 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
   private boolean hardwareRotation = false;
 
   //surface to buffer encoder
-  private final Surface inputSurface = MediaCodec.createPersistentInputSurface();
+  private Surface inputSurface;
 
   private int width = 640;
   private int height = 480;
@@ -132,6 +132,9 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
           && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
         isBufferMode = false;
         Log.i("Input surface null? ", Boolean.toString(inputSurface == null));
+        if (inputSurface == null) {
+          inputSurface = MediaCodec.createPersistentInputSurface();
+        }
         codec.setInputSurface(inputSurface);
       }
       Log.i(TAG, "prepared");
