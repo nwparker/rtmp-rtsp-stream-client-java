@@ -176,6 +176,8 @@ public abstract class Camera2Base {
   public void dispose() {
     recorderVideoEncoder.dispose();
     streamVideoEncoder.dispose();
+    glInterface.removeMediaCodecSurface();
+    glInterface.removeMediaCodecSurface2();
   }
 
   /**
@@ -546,16 +548,9 @@ public abstract class Camera2Base {
   }
 
   private void resetVideoEncoder() {
-    if (glInterface != null) {
-      glInterface.removeMediaCodecSurface();
-      glInterface.removeMediaCodecSurface2();
-    }
     streamVideoEncoder.reset();
     recorderVideoEncoder.reset();
-    if (glInterface != null) {
-      glInterface.addMediaCodecSurface(streamVideoEncoder.getInputSurface());
-      glInterface.addMediaCodecSurface2(recorderVideoEncoder.getInputSurface());
-    } else {
+    if (glInterface == null) {
       cameraManager.closeCamera();
       cameraManager.prepareCamera(streamVideoEncoder.getInputSurface());
       cameraManager.openLastCamera();
@@ -605,8 +600,6 @@ public abstract class Camera2Base {
       onPreview = !isBackground;
       microphoneManager.stop();
       if (glInterface != null) {
-        glInterface.removeMediaCodecSurface();
-        glInterface.removeMediaCodecSurface2();
         if (glInterface instanceof OffScreenGlThread) {
           glInterface.stop();
           cameraManager.closeCamera();
