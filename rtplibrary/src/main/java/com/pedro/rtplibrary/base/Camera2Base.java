@@ -410,6 +410,7 @@ public abstract class Camera2Base {
    * OpenGl.
    */
   private void replaceGlInterface(GlInterface glInterface) {
+    System.out.println("CALLED replaceGlInterface");
     if (this.glInterface != null && Build.VERSION.SDK_INT >= 18) {
       if (isStreaming() || isRecording() || isOnPreview()) {
         cameraManager.closeCamera();
@@ -558,6 +559,7 @@ public abstract class Camera2Base {
   }
 
   private void prepareGlView() {
+    System.out.println("CALLED prepareGlView");
     if (glInterface != null && videoEnabled) {
       if (glInterface instanceof OffScreenGlThread) {
         glInterface = new OffScreenGlThread(context);
