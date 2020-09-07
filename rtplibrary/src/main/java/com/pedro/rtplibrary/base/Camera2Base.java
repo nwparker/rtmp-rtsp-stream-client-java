@@ -287,19 +287,14 @@ public abstract class Camera2Base {
   public boolean prepareVideo(int width, int height, int fps, int bitrate, int iFrameInterval,
       int rotation) {
     return prepareVideo(width, height, fps, bitrate, iFrameInterval, rotation, -1, -1);
+  }
+
   public boolean prepareVideoRecorder(int width, int height, int fps, int bitrate, boolean hardwareRotation,
                               int iFrameInterval, int rotation, int avcProfile, int avcProfileLevel) {
     boolean result =
         recorderVideoEncoder.prepareVideoEncoder(width, height, fps, bitrate, rotation, iFrameInterval,
             FormatVideoEncoder.SURFACE, avcProfile, avcProfileLevel);
     return result;
-  }
-
-
-  public boolean prepareVideo(int width, int height, int fps, int bitrate, boolean hardwareRotation,
-      int iFrameInterval, int rotation) {
-    return prepareVideo(width, height, fps, bitrate, hardwareRotation, iFrameInterval, rotation, -1,
-        -1);
   }
 
   /**
