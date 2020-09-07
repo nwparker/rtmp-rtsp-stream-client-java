@@ -156,7 +156,7 @@ public abstract class OpenGlViewBase extends SurfaceView
   public void removeMediaCodecSurface2() {
     synchronized (sync2) {
       if (surfaceManagerEncoder2 != null) {
-        surfaceManagerEncoder2.release();
+        surfaceManagerEncoder2.release(false);
         surfaceManagerEncoder2 = null;
       }
     }

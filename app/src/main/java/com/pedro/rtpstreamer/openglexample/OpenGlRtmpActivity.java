@@ -402,7 +402,7 @@ public class OpenGlRtmpActivity extends AppCompatActivity
         if (!rtmpCamera2.isStreaming()) {
           if (rtmpCamera2.isRecording()
               || rtmpCamera2.prepareAudio()
-              && rtmpCamera2.prepareVideo(1920, 1080, 30, 1024 * 1024 * 6, false, 0)
+              && rtmpCamera2.prepareVideo(1920, 1080, 30, 1024 * 1024 * 6, 0)
               && rtmpCamera2.prepareVideoRecorder(1920, 1080, 30, 1024 * 1024 * 6, false, 2, 0, -1, -1)
           ) {
             button.setText(R.string.stop_button);
