@@ -64,6 +64,7 @@ import com.pedro.encoder.input.gl.render.filters.object.SurfaceFilterRender;
 import com.pedro.encoder.input.gl.render.filters.object.TextObjectFilterRender;
 import com.pedro.encoder.input.video.CameraOpenException;
 import com.pedro.encoder.utils.gl.TranslateTo;
+import com.pedro.encoder.video.FormatVideoEncoder;
 import com.pedro.rtplibrary.rtmp.RtmpCamera1;
 import com.pedro.rtplibrary.rtmp.RtmpCamera2;
 import com.pedro.rtplibrary.view.OpenGlView;
@@ -425,7 +426,27 @@ public class OpenGlRtmpActivity extends AppCompatActivity
         break;
       case R.id.switch_camera:
         try {
-          rtmpCamera2.switchCamera();
+//          rtmpCamera2.switchCamera();
+          System.out.println("Change res");
+          rtmpCamera2.getGlInterface().removeMediaCodecSurface();
+          rtmpCamera2.streamVideoEncoder.stop();
+
+          rtmpCamera2.streamVideoEncoder.prepareVideoEncoder(
+                  1920,
+                  1080,
+                  30,
+                  1024 * 1024 * 6,
+                  0,
+                  2,
+                  FormatVideoEncoder.SURFACE,
+                  -1 ,
+                  -1
+          );
+
+          rtmpCamera2.streamVideoEncoder.start(false); //was true
+          rtmpCamera2.getGlInterface().setEncoderSize(1920, 1080);
+          rtmpCamera2.getGlInterface().enableAA(true);
+          rtmpCamera2.getGlInterface().addMediaCodecSurface(rtmpCamera2.streamVideoEncoder.getInputSurface());
         } catch (CameraOpenException e) {
           Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
