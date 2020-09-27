@@ -609,6 +609,7 @@ public class RtmpConnection implements RtmpPublisher {
               socket = CreateSSLSocket.createSSlSocket(host, port);
               if (socket == null) throw new IOException("Socket creation failed");
             }
+            socket.setSoTimeout(5000);
             inputStream = new BufferedInputStream(socket.getInputStream());
             outputStream = new BufferedOutputStream(socket.getOutputStream());
             Log.d(TAG, "connect(): socket connection established, doing handshake...");
