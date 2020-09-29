@@ -114,9 +114,7 @@ public class LightOpenGlView extends OpenGlViewBase {
           }
           if (surfaceManagerEncoder != null) surfaceManagerEncoder.swapBuffer();
           else if (surfaceManagerPhoto != null) surfaceManagerPhoto.swapBuffer();
-        }
 
-        synchronized (sync2) {
           if (surfaceManagerEncoder2 != null) {
             surfaceManagerEncoder2.makeCurrent();
             if (muteVideo) {
@@ -126,7 +124,7 @@ public class LightOpenGlView extends OpenGlViewBase {
               simpleCameraRender.drawFrame(1920, 1080, false, aspectRatioMode,
                       streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
             }
-            surfaceManagerEncoder2.swapBuffer();
+            if (surfaceManagerEncoder2 != null) surfaceManagerEncoder2.swapBuffer();
           }
         }
       }
