@@ -40,7 +40,6 @@ public abstract class OpenGlViewBase extends SurfaceView
   protected final Semaphore semaphore = new Semaphore(0);
   protected final BlockingQueue<Filter> filterQueue = new LinkedBlockingQueue<>();
   protected final Object sync = new Object();
-  protected final Object sync2 = new Object();
   protected int previewWidth, previewHeight;
   protected int encoderWidth, encoderHeight;
   protected TakePhotoCallback takePhotoCallback;
@@ -147,14 +146,14 @@ public abstract class OpenGlViewBase extends SurfaceView
 
   @Override
   public void addMediaCodecSurface2(Surface surface) {
-    synchronized (sync2) {
+    synchronized (sync) {
       surfaceManagerEncoder2 = new SurfaceManager(surface, surfaceManager);
     }
   }
 
   @Override
   public void removeMediaCodecSurface2() {
-    synchronized (sync2) {
+    synchronized (sync) {
       if (surfaceManagerEncoder2 != null) {
         surfaceManagerEncoder2.release(false);
         surfaceManagerEncoder2 = null;

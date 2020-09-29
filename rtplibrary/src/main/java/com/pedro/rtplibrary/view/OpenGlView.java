@@ -151,22 +151,17 @@ public class OpenGlView extends OpenGlViewBase {
               takePhotoCallback = null;
               surfaceManagerPhoto.swapBuffer();
             }
-          }
 
-          synchronized (sync2) {
             if (surfaceManagerEncoder2 != null) {
+              // Hardcode to 1080p here
+              int w = muteVideo ? 0 : 1920;
+              int h = muteVideo ? 0 : 1080;
               surfaceManagerEncoder2.makeCurrent();
-              if (muteVideo) {
-                managerRender.drawScreen(0, 0, false, aspectRatioMode, streamRotation, false,
-                        isStreamVerticalFlip, isStreamHorizontalFlip);
-              } else {
-                managerRender.drawScreen(1920, 1080, false, aspectRatioMode,
-                        streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
-              }
+              managerRender.drawScreen(w, h, false, aspectRatioMode,
+                  streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
               surfaceManagerEncoder2.swapBuffer();
             }
           }
-
 
           if (!filterQueue.isEmpty()) {
             Filter filter = filterQueue.take();
