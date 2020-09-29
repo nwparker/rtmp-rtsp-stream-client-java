@@ -155,9 +155,7 @@ public class OpenGlView extends OpenGlViewBase {
             }
             if (surfaceManagerEncoder != null) surfaceManagerEncoder.swapBuffer();
             else if (surfaceManagerPhoto != null) surfaceManagerPhoto.swapBuffer();
-          }
 
-          synchronized (sync2) {
             if (surfaceManagerEncoder2 != null) {
               surfaceManagerEncoder2.makeCurrent();
               if (muteVideo) {
@@ -167,10 +165,9 @@ public class OpenGlView extends OpenGlViewBase {
                 managerRender.drawScreen(1920, 1080, false, aspectRatioMode,
                         streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
               }
-              surfaceManagerEncoder2.swapBuffer();
+              if (surfaceManagerEncoder2 != null) surfaceManagerEncoder2.swapBuffer();
             }
           }
-
 
           if (!filterQueue.isEmpty()) {
             Filter filter = filterQueue.take();
