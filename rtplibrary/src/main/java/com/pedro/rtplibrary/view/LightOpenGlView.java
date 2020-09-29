@@ -110,18 +110,12 @@ public class LightOpenGlView extends OpenGlViewBase {
             takePhotoCallback = null;
             surfaceManagerPhoto.swapBuffer();
           }
-        }
-
-        synchronized (sync2) {
           if (surfaceManagerEncoder2 != null) {
+            int w = muteVideo ? 0 : 1920;
+            int h = muteVideo ? 0 : 1080;
             surfaceManagerEncoder2.makeCurrent();
-            if (muteVideo) {
-              simpleCameraRender.drawFrame(0, 0, false, aspectRatioMode, streamRotation, false,
-                      isStreamVerticalFlip, isStreamHorizontalFlip);
-            } else {
-              simpleCameraRender.drawFrame(1920, 1080, false, aspectRatioMode,
-                      streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
-            }
+            simpleCameraRender.drawFrame(w, h, false, aspectRatioMode,
+                streamRotation, false, isStreamVerticalFlip, isStreamHorizontalFlip);
             surfaceManagerEncoder2.swapBuffer();
           }
         }
