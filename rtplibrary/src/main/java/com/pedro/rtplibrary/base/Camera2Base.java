@@ -445,7 +445,7 @@ public abstract class Camera2Base {
     recordController.startRecord(fd, listener);
     if (!streaming) {
       startEncoders();
-    } else if (videoEncoder.isRunning()) {
+    } else if (recorderVideoEncoder.isRunning()) {
       resetVideoEncoder(false);
     }
   }
