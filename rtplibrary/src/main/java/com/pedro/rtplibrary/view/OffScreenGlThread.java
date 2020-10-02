@@ -138,7 +138,7 @@ public class OffScreenGlThread
   public void removeMediaCodecSurface2() {
     synchronized (sync) {
       if (surfaceManagerEncoder2 != null) {
-        surfaceManagerEncoder2.release(false);
+        surfaceManagerEncoder2.release();
         surfaceManagerEncoder2 = null;
       }
     }
