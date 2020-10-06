@@ -149,9 +149,7 @@ public class OpenGlView extends OpenGlViewBase {
               }
               surfaceManagerEncoder.swapBuffer();
             }
-          }
 
-          synchronized (sync2) {
             if (surfaceManagerEncoder2 != null) {
               surfaceManagerEncoder2.makeCurrent();
               if (muteVideo) {
