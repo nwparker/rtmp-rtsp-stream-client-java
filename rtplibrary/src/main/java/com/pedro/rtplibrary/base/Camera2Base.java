@@ -196,7 +196,12 @@ public abstract class Camera2Base {
         audioEncoder.setGetFrame(((MicrophoneManagerManual) microphoneManager).getGetFrame());
         break;
       case ASYNC:
-        microphoneManager = new MicrophoneManager(this);
+        microphoneManager = new MicrophoneManager(new GetMicrophoneData() {
+          @Override
+          public void inputPCMData(Frame frame) {
+            audioEncoder.inputPCMData(frame);
+          }
+        });
         audioEncoder = createAudioEncoder();
         break;
     }
@@ -504,10 +509,10 @@ public abstract class Camera2Base {
       previewWidth = width;
       previewHeight = height;
       if (surfaceView != null) {
-        cameraManager.prepareCamera(surfaceView.getHolder().getSurface(), videoEncoder.getFps());
+        cameraManager.prepareCamera(surfaceView.getHolder().getSurface(), streamVideoEncoder.getFps());
       } else if (textureView != null) {
         cameraManager.prepareCamera(new Surface(textureView.getSurfaceTexture()),
-            videoEncoder.getFps());
+                streamVideoEncoder.getFps());
       } else if (glInterface != null) {
         boolean isPortrait = CameraHelper.isPortrait(context);
         if (isPortrait) {
@@ -518,7 +523,7 @@ public abstract class Camera2Base {
         glInterface.setRotation(rotation == 0 ? 270 : rotation - 90);
         glInterface.start();
         cameraManager.prepareCamera(glInterface.getSurfaceTexture(), width, height,
-            videoEncoder.getFps());
+            streamVideoEncoder.getFps());
       }
       cameraManager.openCameraFacing(cameraFacing);
       onPreview = true;
