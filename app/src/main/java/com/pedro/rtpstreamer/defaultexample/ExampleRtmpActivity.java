@@ -53,7 +53,7 @@ public class ExampleRtmpActivity extends AppCompatActivity
     etUrl = findViewById(R.id.et_rtp_url);
     etUrl.setHint(R.string.hint_rtmp);
     rtmpCamera1 = new RtmpCamera1(surfaceView, this);
-    rtmpCamera1.setReTries(10);
+    rtmpCamera1.setReTries(Integer.MAX_VALUE);
     surfaceView.getHolder().addCallback(this);
   }
 
@@ -72,7 +72,7 @@ public class ExampleRtmpActivity extends AppCompatActivity
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        if (rtmpCamera1.reTry(5000, reason)) {
+        if (rtmpCamera1.reTry(1500, reason)) {
           Toast.makeText(ExampleRtmpActivity.this, "Retry", Toast.LENGTH_SHORT)
               .show();
         } else {
