@@ -170,7 +170,7 @@ public class OpenGlRtmpActivity extends AppCompatActivity
         return true;
       case R.id.chroma:
         ChromaFilterRender chromaFilterRender = new ChromaFilterRender();
-        rtmpCamera1.getGlInterface().setFilter(chromaFilterRender);
+        rtmpCamera2.getGlInterface().setFilter(chromaFilterRender);
         chromaFilterRender.setImage(BitmapFactory.decodeResource(getResources(), R.drawable.bg_chroma));
         return true;
       case R.id.circle:
