@@ -182,6 +182,16 @@ public class RtmpCamera2 extends Camera2Base {
     return srsFlvMuxer.hasCongestion();
   }
 
+  // custom added
+  public int getFrameQueueSize() {
+    return srsFlvMuxer.getFrameQueueSize();
+  }
+
+  // custom added
+  public int getFrameQueueRemainingCapacity() {
+    return srsFlvMuxer.getFrameQueueRemainingCapacity();
+  }
+
   @Override
   protected void getAacDataRtp(ByteBuffer aacBuffer, MediaCodec.BufferInfo info) {
     srsFlvMuxer.sendAudio(aacBuffer, info);
