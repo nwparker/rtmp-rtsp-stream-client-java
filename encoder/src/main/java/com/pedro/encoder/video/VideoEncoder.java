@@ -248,6 +248,7 @@ public class VideoEncoder extends BaseEncoder implements GetCameraData {
 
   public void setFps(int fps) {
     this.fps = fps;
+    fpsLimiter.setFPS(fps);
   }
 
   public int getFps() {
