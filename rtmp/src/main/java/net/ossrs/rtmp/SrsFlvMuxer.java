@@ -63,8 +63,8 @@ public class SrsFlvMuxer {
   private boolean needToFindKeyFrame = true;
   private SrsAllocator mVideoAllocator = new SrsAllocator(VIDEO_ALLOC_SIZE);
   private SrsAllocator mAudioAllocator = new SrsAllocator(AUDIO_ALLOC_SIZE);
-  private volatile BlockingQueue<SrsFlvFrame> mFlvVideoTagCache = new LinkedBlockingQueue<>(30);
-  private volatile BlockingQueue<SrsFlvFrame> mFlvAudioTagCache = new LinkedBlockingQueue<>(30);
+  private volatile BlockingQueue<SrsFlvFrame> mFlvVideoTagCache;
+  private volatile BlockingQueue<SrsFlvFrame> mFlvAudioTagCache;
   private ConnectCheckerRtmp connectCheckerRtmp;
   private int sampleRate = 0;
   private boolean isPpsSpsSend = false;
@@ -87,14 +87,20 @@ public class SrsFlvMuxer {
   /**
    * constructor.
    */
-  public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp, RtmpPublisher publisher) {
+  public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp, RtmpPublisher publisher, int tagCacheCapacity) {
+    this.mFlvVideoTagCache = new LinkedBlockingQueue<>(tagCacheCapacity);
+    this.mFlvAudioTagCache = new LinkedBlockingQueue<>(tagCacheCapacity);
     this.connectCheckerRtmp = connectCheckerRtmp;
     this.publisher = publisher;
     handler = new Handler(Looper.getMainLooper());
   }
 
+  public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp, int tagCacheCapacity) {
+    this(connectCheckerRtmp, new DefaultRtmpPublisher(connectCheckerRtmp), tagCacheCapacity);
+  }
+
   public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp) {
-    this(connectCheckerRtmp, new DefaultRtmpPublisher(connectCheckerRtmp));
+    this(connectCheckerRtmp, 30);
   }
 
   public void setProfileIop(byte profileIop) {
