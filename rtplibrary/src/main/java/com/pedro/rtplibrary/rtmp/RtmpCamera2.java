@@ -186,13 +186,23 @@ public class RtmpCamera2 extends Camera2Base {
   }
 
   // custom added
-  public int getFrameQueueSize() {
-    return srsFlvMuxer.getFrameQueueSize();
+  public int getAudioFrameQueueSize() {
+    return srsFlvMuxer.getAudioFrameQueueSize();
   }
 
   // custom added
-  public int getFrameQueueRemainingCapacity() {
-    return srsFlvMuxer.getFrameQueueRemainingCapacity();
+  public int getAudioFrameQueueRemainingCapacity() {
+    return srsFlvMuxer.getAudioFrameQueueRemainingCapacity();
+  }
+
+  // custom added
+  public int getVideoFrameQueueSize() {
+    return srsFlvMuxer.getVideoFrameQueueSize();
+  }
+
+  // custom added
+  public int getVideoFrameQueueRemainingCapacity() {
+    return srsFlvMuxer.getVideoFrameQueueRemainingCapacity();
   }
 
   @Override

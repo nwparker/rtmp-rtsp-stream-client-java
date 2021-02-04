@@ -1065,12 +1065,22 @@ public class SrsFlvMuxer {
   }
 
   // custom added
-  public int getFrameQueueSize() {
+  public int getAudioFrameQueueSize() {
+    return mFlvAudioTagCache.size();
+  }
+
+  // custom added
+  public int getAudioFrameQueueRemainingCapacity() {
+    return mFlvAudioTagCache.remainingCapacity();
+  }
+
+  // custom added
+  public int getVideoFrameQueueSize() {
     return mFlvVideoTagCache.size();
   }
 
   // custom added
-  public int getFrameQueueRemainingCapacity() {
+  public int getVideoFrameQueueRemainingCapacity() {
     return mFlvVideoTagCache.remainingCapacity();
   }
 
