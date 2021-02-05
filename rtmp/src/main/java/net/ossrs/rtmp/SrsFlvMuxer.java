@@ -87,20 +87,27 @@ public class SrsFlvMuxer {
   /**
    * constructor.
    */
-  public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp, RtmpPublisher publisher, int tagCacheCapacity) {
-    this.mFlvVideoTagCache = new LinkedBlockingQueue<>(tagCacheCapacity);
-    this.mFlvAudioTagCache = new LinkedBlockingQueue<>(tagCacheCapacity);
+  public SrsFlvMuxer(
+      ConnectCheckerRtmp connectCheckerRtmp,
+      RtmpPublisher publisher,
+      int videoTagCacheCapacity,
+      int audioTagCacheCapacity
+  ) {
+    this.mFlvVideoTagCache = new LinkedBlockingQueue<>(videoTagCacheCapacity);
+    this.mFlvAudioTagCache = new LinkedBlockingQueue<>(audioTagCacheCapacity);
     this.connectCheckerRtmp = connectCheckerRtmp;
     this.publisher = publisher;
     handler = new Handler(Looper.getMainLooper());
   }
 
-  public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp, int tagCacheCapacity) {
-    this(connectCheckerRtmp, new DefaultRtmpPublisher(connectCheckerRtmp), tagCacheCapacity);
+  public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp, int videoTagCacheCapacity, int audioTagCacheCapacity) {
+    this(
+        connectCheckerRtmp, new DefaultRtmpPublisher(connectCheckerRtmp), videoTagCacheCapacity, audioTagCacheCapacity
+    );
   }
 
   public SrsFlvMuxer(ConnectCheckerRtmp connectCheckerRtmp) {
-    this(connectCheckerRtmp, 30);
+    this(connectCheckerRtmp, 30, 30);
   }
 
   public void setProfileIop(byte profileIop) {

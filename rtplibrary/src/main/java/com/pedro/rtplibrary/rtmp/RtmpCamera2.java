@@ -56,9 +56,13 @@ public class RtmpCamera2 extends Camera2Base {
     srsFlvMuxer = new SrsFlvMuxer(connectChecker);
   }
 
-  public RtmpCamera2(OpenGlView openGlView, ConnectCheckerRtmp connectChecker, int tagCacheCapacity) {
+  public RtmpCamera2(
+      OpenGlView openGlView,
+      ConnectCheckerRtmp connectChecker,
+      int videoTagCacheCapacity,
+      int audioTagCacheCapacity) {
     super(openGlView);
-    srsFlvMuxer = new SrsFlvMuxer(connectChecker, tagCacheCapacity);
+    srsFlvMuxer = new SrsFlvMuxer(connectChecker, videoTagCacheCapacity, audioTagCacheCapacity);
   }
 
   public RtmpCamera2(LightOpenGlView lightOpenGlView, ConnectCheckerRtmp connectChecker) {
